@@ -19,6 +19,7 @@ import AdminItemmanagement from './Pages/Apora/AdminItemmanagement';
 import AporaAdminNavbar from './Components/AporaAdminNavbar';
 import AporaCommonNavbar from './Yard/AporaCommonNavbar';
 import Picksupervisor from './Yard/Picksupervisor/Picksupervisor';
+import Picklist from './Yard/Picksupervisor/Picklist'
 function App() {
   return (
     <HashRouter>
@@ -42,6 +43,7 @@ function App() {
 
       {/* ==============apora================ */}
       <Route path='/picksupervisor' element={<Picksupervisor/>}/>
+      <Route path='/picklist' element={<Picklist/>}/>
        </Routes>
        </div>
        </HashRouter>

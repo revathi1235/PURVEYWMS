@@ -94,15 +94,16 @@
 // }
 
 // export default Picksupervisor
-
+import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import Nav from 'react-bootstrap/Nav';
+import { Button } from 'react-bootstrap';
 
+import React, { useState } from 'react';
 import PurveyLogo from "../../Assets/PurveyLogo.png";
 import Navbar from 'react-bootstrap/Navbar';
 import { Container,Row,Col } from 'react-bootstrap';
-import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -216,11 +217,21 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
+  const [isVisible,setIsvisible]=useState(false)
+  const [isDashboard,setIsdashboard]=useState('dashboard')
   const navigate=useNavigate()
-  const [isVisible,setIsvisible]=React.useState(false)
 const handlePicklist=()=>{
- navigate('/picklist')
+  setIsvisible(true)
+  setIsdashboard(false)
 }
+const handleDashboard=()=>{
+    navigate('/picksupervisor')
+}
+const [selected, setSelected] = useState(null);
+
+const handleClick = (text) => {
+  setSelected(text);
+};
   return (
     <Box sx={{ display: 'flex' }} >
       <CssBaseline />
@@ -242,7 +253,7 @@ const handlePicklist=()=>{
           </IconButton>
           <Navbar.Brand ><img src={PurveyLogo} alt="" style={{height:"30px",cursor:"pointer"}}    /> <span className='wms-navbar' style={{cursor:"pointer"}} >APORA</span></Navbar.Brand>
           <Nav className="ms-auto">
-            <Nav.Link  className='wms-sidenavbar'> 
+            <Nav.Link  className='wms-sidenavbar' onClick={handleDashboard}> 
                {/* <img src={GRIcon3} style={{height:"20px",cursor:"pointer"}} alt="" /> */}
                 Dashboard </Nav.Link>
             <Nav.Link className='wms-sidenavbar' onClick={handlePicklist}> 
@@ -263,56 +274,18 @@ const handlePicklist=()=>{
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={[
-                  {
-                    minHeight: 48,
-                    px: 2.5,
-                  },
-                  open
-                    ? {
-                        justifyContent: 'initial',
-                      }
-                    : {
-                        justifyContent: 'center',
-                      },
-                ]}
-              >
-                <ListItemIcon
-                  sx={[
-                    {
-                      minWidth: 0,
-                      justifyContent: 'center',
-                    },
-                    open
-                      ? {
-                          mr: 3,
-                        }
-                      : {
-                          mr: 'auto',
-                        },
-                  ]}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  sx={[
-                    open
-                      ? {
-                          opacity: 1,
-                        }
-                      : {
-                          opacity: 0,
-                        },
-                  ]}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+  {['Key', 'Picklist'].map((text, index) => (
+    <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+      <Button className='mt-5'
+        variant="success"  onClick={() => handleClick(text)}
+        style={{ width: '100%', display: 'flex', alignItems: 'center' }}
+      >
+      
+        <ListItemText primary={text} />
+      </Button>
+    </ListItem>
+  ))}
+</List>
         <Divider />
         <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
@@ -368,15 +341,9 @@ const handlePicklist=()=>{
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Container >
-        <Row className='mt-4'>
-           
-            <Col lg={12}>
-            <h5 className='materialinward-heading'>Dashboard</h5>
-            </Col>
-            
-        </Row>
-        </Container> 
+       
+      
+     
 
 
 
@@ -403,11 +370,75 @@ const handlePicklist=()=>{
 
 
         {/* ========================pist list divs========================== */}
-     {isVisible && (
-         <Container>
-         <h1>isgbfi</h1>
-       </Container> 
-     )}
+        <Container>
+        <Row className="mt-4">
+          <Col lg={12}>
+            {selected === 'Key' && (
+                <div>
+                     <h5 className="materialinward-heading">Process Information</h5>
+                <h6 className="materialinward-heading">Key List Data View</h6>
+               <Button variant='success'> Initiate</Button>
+               <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td colSpan={2}>Larry the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </Table>
+                </div>
+                 )}
+            {selected === 'Picklist' && (
+                 <div>
+                 <h5 className="materialinward-heading">Process Information</h5>
+            <h6 className="materialinward-heading">Key List Data View</h6>
+           <Button variant='success'> Initiate</Button>
+           <Table striped bordered hover>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+  
+  </tbody>
+</Table>
+            </div>
+            )}
+          </Col>
+        </Row>
+      </Container>
+     
       </Box>
     </Box>
   );
